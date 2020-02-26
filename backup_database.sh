@@ -6,13 +6,13 @@ TODAY=`date +"%d%b%Y"`
 ################################################################
 ################## Update below values  ########################
  
-DB_BACKUP_PATH='/backup/dbbackup'
+DB_BACKUP_PATH='/var/moodlebackups/database'
 MYSQL_HOST='localhost'
 MYSQL_PORT='3306'
 MYSQL_USER='root'
-MYSQL_PASSWORD='mysecret'
-DATABASE_NAME='mydb'
-BACKUP_RETAIN_DAYS=30   ## Number of days to keep local backup copy
+MYSQL_PASSWORD='root'
+DATABASE_NAME='moodle'
+BACKUP_RETAIN_DAYS=7   ## Number of days to keep local backup copy
  
 #################################################################
  
@@ -24,6 +24,7 @@ mysqldump -h ${MYSQL_HOST} \
    -P ${MYSQL_PORT} \
    -u ${MYSQL_USER} \
    -p${MYSQL_PASSWORD} \
+   --single-transaction \
    ${DATABASE_NAME} | gzip > ${DB_BACKUP_PATH}/${TODAY}/${DATABASE_NAME}-${TODAY}.sql.gz
  
 if [ $? -eq 0 ]; then
